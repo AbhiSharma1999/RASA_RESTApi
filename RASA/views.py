@@ -33,13 +33,16 @@ class Webhook(APIView):
 
         if lang_id == 'en':
 
-            url = 'https://5ee86412c40a.ngrok.io/webhooks/rest/webhook'
+            url = 'http://localhost:5005/webhooks/rest/webhook'
             
             resp = requests.post(url, data=json.dumps(request_serializer.data))
             print(resp.text)
     
         else:
-            pass
+            url = 'http://localhost:5005/webhooks/rest/webhook'
+            
+            resp = requests.post(url, data=json.dumps(request_serializer.data))
+            print(resp.text)
 
         response_serializer = RespSerializer(json.loads(resp.text), many=True)
 
