@@ -22,6 +22,7 @@ language_translator.set_service_url('https://api.eu-gb.language-translator.watso
 
 class Webhook(APIView):
 
+
     def post(self, request):
 
         request_serializer = RequestSerializer(request.data)
@@ -30,10 +31,11 @@ class Webhook(APIView):
         language = language_translator.identify(text).get_result()
 
         lang_id = language.get('languages')[0]['language']
+        print(lang_id)
 
         if lang_id == 'en':
 
-            url = 'http://localhost:5005/webhooks/rest/webhook'
+            url = 'http://localhost:5000/webhooks/rest/webhook'
             
             resp = requests.post(url, data=json.dumps(request_serializer.data))
             print(resp.text)
@@ -48,7 +50,9 @@ class Webhook(APIView):
 
         return Response(response_serializer.data)
 
-        
+def home_view(request):
+
+    return render(request,'RASA/index.html')     
 
 
 
